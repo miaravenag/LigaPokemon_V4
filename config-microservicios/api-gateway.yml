@@ -1,0 +1,97 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: seguridad
+              uri: lb://acceso_seguridad
+              predicates:
+                - Path=/api/v1/acceso-seguridad/**, /v3/api-docs/seguridad
+              filters:
+                - RewritePath=/v3/api-docs/seguridad, /v3/api-docs
+
+            - id: CentroPokemon
+              uri: lb://centropokemon
+              predicates:
+                - Path=/api/v1/centropokemons/**, /v3/api-docs/CentroPokemon
+              filters:
+                - RewritePath=/v3/api-docs/CentroPokemon, /v3/api-docs
+
+            - id: Entrenadores
+              uri: lb://entrenadores
+              predicates:
+                - Path=/api/v1/entrenadores/**, /v3/api-docs/entrenadores
+              filters:
+                - RewritePath=/v3/api-docs/entrenadores, /v3/api-docs
+
+            - id: Inventario
+              uri: lb://inventario
+              predicates:
+                - Path=/api/v1/inventarios/**, /v3/api-docs/Inventario
+              filters:
+                - RewritePath=/v3/api-docs/Inventario, /v3/api-docs
+
+            - id: Medallas
+              uri: lb://medallas
+              predicates:
+                - Path=/api/v1/medallas/**, /v3/api-docs/Medallas
+              filters:
+                - RewritePath=/v3/api-docs/Medallas, /v3/api-docs
+
+            - id: Pokedex
+              uri: lb://pokedex
+              predicates:
+                - Path=/api/v1/pokedex/**, /v3/api-docs/Pokedex
+              filters:
+                - RewritePath=/v3/api-docs/Pokedex, /v3/api-docs
+
+            - id: Tienda
+              uri: lb://tienda
+              predicates:
+                - Path=/api/v1/tiendas/**, /v3/api-docs/Tienda
+              filters:
+                - RewritePath=/v3/api-docs/Tienda, /v3/api-docs
+
+            - id: Torneos
+              uri: lb://torneos
+              predicates:
+                - Path=/api/v1/torneos/**, /v3/api-docs/Torneos
+              filters:
+                - RewritePath=/v3/api-docs/Torneos, /v3/api-docs
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enable: true
+    path: /swagger-ui.html
+    urls:
+      - name: Seguridad
+        url: /v3/api-docs/seguridad
+      - name: CentroPokemon
+        url: /v3/api-docs/CentroPokemon
+      - name: Entrenadores
+        url: /v3/api-docs/entrenadores
+      - name: Inventario
+        url: /v3/api-docs/Inventario
+      - name: Medallas
+        url: /v3/api-docs/Medallas
+      - name: Pokedex
+        url: /v3/api-docs/Pokedex
+      - name: Tienda
+        url: /v3/api-docs/Tienda
+      - name: Torneos
+        url: /v3/api-docs/Torneos
